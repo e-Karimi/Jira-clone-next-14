@@ -13,23 +13,22 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 import { DottedSeparator } from "@/components/dotted-separator";
-
-const formSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(1, { message: "Required" }),
-});
+import { loginSchema } from "../schemas";
+import { useLogin } from "../api/use-login";
 
 export const SignInCard = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { mutate } = useLogin();
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("onSubmit ~ values:", values);
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    mutate({ json: values });
   };
 
   return (
