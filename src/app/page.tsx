@@ -1,12 +1,15 @@
-import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+import { UserButton } from "@/features/auth/components/user-button";
+import { getCurrentUser } from "@/features/auth/actions";
+
+export default async function Home() {
+  const user = await getCurrentUser();
+  if (!user) redirect("/sign-in");
+
   return (
-    <div>
-      <Button size="lg" disabled className="font-sans font-semibold">primary</Button>
-      <Button variant="link" className="font-sans font-semibold">link</Button>
-      <Button variant="tertiary" className="font-sans">tertiary</Button>
-      <h1 className="text-2xl">Home</h1>
-    </div>
+    <>
+      <UserButton />
+    </>
   );
 }

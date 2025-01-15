@@ -1,5 +1,11 @@
-import { SignInCard } from "@/features/auth/components/sign-in-card";
+import { redirect } from "next/navigation";
 
-export default function SignIn() {
-  return <SignInCard/>;
+import { SignInCard } from "@/features/auth/components/sign-in-card";
+import { getCurrentUser } from "@/features/auth/actions";
+
+export default async function SignIn() {
+  const user = await getCurrentUser();
+  if (user) redirect("/");
+
+  return <SignInCard />;
 }
