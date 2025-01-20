@@ -1,38 +1,34 @@
-import { useRouter } from "next/navigation";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 import { client } from "@/lib/rpc";
 
-const $post = client.api.auth.login.$post;
+const $post = client.api.workspaces.$post;
 
 type ResponseType = InferResponseType<typeof $post>;
 type RequestType = InferRequestType<typeof $post>;
 
-export const useLogin = () => {
+export const useCreateWorkspace = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await $post({ json });
 
       if (!response.ok) {
-        toast.error("Faild to log in");
+        toast.error("Faild to create workspace");
       }
 
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Logged in");
-      // Invalidate and refetch
-      router.refresh();
-      queryClient.invalidateQueries({ queryKey: ["current"] });
+      toast.success("Workspace created");
+      // Invalidate
+      queryClient.invalidateQueries({ queryKey: ["workspaces"] });
     },
     onError: () => {
-      toast.error("Faild to log in");
+      toast.error("Faild to create workspace");
     },
   });
 
