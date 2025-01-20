@@ -13,8 +13,8 @@ export const useCreateWorkspace = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ json }) => {
-      const response = await $post({ json });
+    mutationFn: async ({ form }) => {
+      const response = await $post({ form });
 
       if (!response.ok) {
         toast.error("Faild to create workspace");

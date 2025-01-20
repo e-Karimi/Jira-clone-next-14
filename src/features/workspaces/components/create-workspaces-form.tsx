@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,16 +10,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { createWorkspaceSchema } from "../schemas";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { useCreateWorkspace } from "../api/use-create-workspace";
+import { ImageIcon } from "lucide-react";
 
 interface CreateWorkspacesFormPrps {
   onCancel?: () => void;
 }
 
 export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending } = useCreateWorkspace();
 
   const form = useForm<z.infer<typeof createWorkspaceSchema>>({
@@ -28,8 +33,28 @@ export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => 
   });
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-    console.log("onSubmit ~ values:", values);
-    mutate({ json: values });
+    const finalValues = {
+      ...values,
+      image: values.image instanceof File ? values.image : "",
+    };
+
+    mutate(
+      { form: finalValues },
+      {
+        onSuccess: () => {
+          form.reset();
+          //redirect to the new workspace
+        },
+      }
+    );
+  };
+
+  const handleImaheChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      form.setValue("image", file);
+    }
   };
 
   return (
@@ -54,6 +79,55 @@ export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => 
                     </FormControl>
                     <FormMessage />
                   </FormItem>
+                )}
+              />
+              <FormField
+                name="image"
+                render={({ field }) => (
+                  <div className="flex flex-col gap-y-2">
+                    <div className="flex items-center gap-x-5">
+                      {field.value ? (
+                        <div className="relative size-[72px] overflow-hidden rounded-md">
+                          <Image
+                            src={field.value instanceof File ? URL.createObjectURL(field.value) : field.value}
+                            width={72}
+                            height={72}
+                            priority
+                            alt="logo"
+                            className="object-cover w-[72px] h-[72px] "
+                          />
+                        </div>
+                      ) : (
+                        <Avatar className="size-[72px]">
+                          <AvatarFallback>
+                            <ImageIcon className="size-[36px] text-neutral-400" />
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div className="flex flex-col gap-y-1">
+                        <p className="text-sm"> Workspace Icon</p>
+                        <p className="text-xs text-muted-foreground"> JPG, PNG, SVG, JPEG, TIFF, max 1MB</p>
+                        <input
+                          className="hidden"
+                          type="file"
+                          accept=".jpg, .png, .jpeg, .svg, tiff"
+                          ref={inputRef}
+                          disabled={isPending}
+                          onChange={handleImaheChange}
+                        />
+                        <Button
+                          type="button"
+                          variant="tertiary"
+                          size="xs"
+                          className="mt-2 w-fit"
+                          onClick={() => inputRef.current?.click()}
+                          disabled={isPending}
+                        >
+                          Upload Image
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 )}
               />
             </div>
