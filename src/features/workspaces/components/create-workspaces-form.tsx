@@ -7,16 +7,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ImageIcon } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { createWorkspaceSchema } from "../schemas";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { useCreateWorkspace } from "../api/use-create-workspace";
-import { ImageIcon } from "lucide-react";
 
 interface CreateWorkspacesFormPrps {
   onCancel?: () => void;
@@ -134,8 +135,15 @@ export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => 
               />
             </div>
             <DottedSeparator className="py-7" />
-            <div className="flex items-center justify-between">
-              <Button onClick={onCancel} type="button" variant="secondary" size="lg" disabled={isPending}>
+            <div className={cn("flex items-center justify-between", !onCancel && "justify-center")}>
+              <Button
+                onClick={onCancel}
+                type="button"
+                variant="secondary"
+                size="lg"
+                disabled={isPending}
+                className={cn(!onCancel && "hidden")}
+              >
                 Cancel
               </Button>
               <Button type="submit" size="lg" disabled={isPending}>

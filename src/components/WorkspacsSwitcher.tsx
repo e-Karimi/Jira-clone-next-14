@@ -25,7 +25,7 @@ export const WorkspacsSwitcher = () => {
         <p className="text-xs uppercase text-neutral-500">Workspaces</p>
         <RiAddCircleFill
           onClick={() => setIsOpen(true)}
-          className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"
+          className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 rounded-full  transition ring-2 ring-blue-500 bg-blue-50 "
         />
       </div>
       <Select value={workspaceId} onValueChange={onselect}>
