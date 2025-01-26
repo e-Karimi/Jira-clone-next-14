@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,7 @@ interface CreateWorkspacesFormPrps {
 export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending } = useCreateWorkspace();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof createWorkspaceSchema>>({
     resolver: zodResolver(createWorkspaceSchema),
@@ -41,9 +43,9 @@ export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => 
     mutate(
       { form: finalValues },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
-          //redirect to the new workspace
+          router.push(`/workspaces/${data.$id}`);
         },
       }
     );
@@ -133,7 +135,7 @@ export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => 
             </div>
             <DottedSeparator className="py-7" />
             <div className="flex items-center justify-between">
-              <Button type="button" variant="secondary" size="lg" onClick={onCancel} disabled={isPending}>
+              <Button onClick={onCancel} type="button" variant="secondary" size="lg" disabled={isPending}>
                 Cancel
               </Button>
               <Button type="submit" size="lg" disabled={isPending}>
