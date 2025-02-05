@@ -23,7 +23,7 @@ interface CreateWorkspacesFormPrps {
   onCancel?: () => void;
 }
 
-export const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormPrps) => {
+export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspacesFormPrps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending } = useCreateWorkspace();
   const router = useRouter();

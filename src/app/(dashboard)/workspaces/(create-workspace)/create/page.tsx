@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/features/auth/actions";
-import { CreateWorkspacesForm } from "@/features/workspaces/components/create-workspaces-form";
+import { CreateWorkspaceForm } from "@/features/workspaces/components/create-workspace-form";
 
 export default async function WorkspaceCreatePage() {
   const user = await getCurrentUser();
@@ -9,7 +9,7 @@ export default async function WorkspaceCreatePage() {
 
   return (
     <div className="w-full lg: max-w-xl ">
-      <CreateWorkspacesForm />
+      <CreateWorkspaceForm />
     </div>
   );
 }
