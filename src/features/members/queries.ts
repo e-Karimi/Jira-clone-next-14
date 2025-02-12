@@ -13,7 +13,6 @@ export const getMember = async ({ databases, workspaceId, userId }: getMemberPro
     Query.equal("workspaceId", workspaceId),
     Query.equal("userId", userId),
   ]);
-  console.log("getMember ~ members:", members);
-
+  
   return members.documents[0];
 };

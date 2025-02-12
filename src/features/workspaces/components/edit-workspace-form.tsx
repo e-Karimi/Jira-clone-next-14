@@ -19,6 +19,7 @@ import { updateWorkspaceSchema } from "../schemas";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { useUpdateWorkspace } from "../api/use-update-workspace";
 import type { Workspace } from "../types";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 interface CreateWorkspacesFormPrps {
   onCancel?: () => void;
@@ -67,13 +68,27 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: CreateWorkspacesF
 
   return (
     <Card className="w-full h-full border-none shadow-none">
-      <CardHeader className="flex p-7">
-        <CardTitle className="text-xl font-bold">Update a workspace</CardTitle>
+      <CardHeader>
+        <div
+          onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)}
+          className="group flex items-center gap-x-1 mb-2 cursor-pointer"
+        >
+          <MdKeyboardBackspace className="w-6 h-6 text-gray-500 group-hover:text-blue-700" />
+          <small className="text-gray-500 group-hover:text-blue-700">Back</small>
+        </div>
+
+        <CardTitle className="text-base font-bold ">
+          Update{" "}
+          <span className="underline decoration-double underline-offset-4 decoration-blue-500">
+            {initialValues.name}
+          </span>{" "}
+          workspace
+        </CardTitle>
       </CardHeader>
-      <div className="px-7">
+      <div className="mb-2">
         <DottedSeparator />
       </div>
-      <CardContent className="p-7">
+      <CardContent className="p-7 pt-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-4">
@@ -123,16 +138,34 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: CreateWorkspacesF
                           disabled={isPending}
                           onChange={handleImaheChange}
                         />
-                        <Button
-                          type="button"
-                          variant="tertiary"
-                          size="xs"
-                          className="mt-2 w-fit"
-                          onClick={() => inputRef.current?.click()}
-                          disabled={isPending}
-                        >
-                          Upload Image
-                        </Button>
+                        {field.value ? (
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="xs"
+                            className="mt-2 w-fit"
+                            onClick={() => {
+                              field.onChange(null);
+                              if (inputRef.current) {
+                                inputRef.current.value = "";
+                              }
+                            }}
+                            disabled={isPending}
+                          >
+                            Remove Image
+                          </Button>
+                        ) : (
+                          <Button
+                            type="button"
+                            variant="tertiary"
+                            size="xs"
+                            className="mt-2 w-fit"
+                            onClick={() => inputRef.current?.click()}
+                            disabled={isPending}
+                          >
+                            Upload Image
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>

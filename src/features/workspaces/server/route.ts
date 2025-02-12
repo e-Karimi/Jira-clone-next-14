@@ -9,7 +9,7 @@ import { MemberRole } from "@/features/members/types";
 
 import type { Workspace } from "../types";
 import { generateInviteCode } from "@/lib/utils";
-import { getMember } from "@/features/members/utils";
+import { getMember } from "@/features/members/queries";
 
 const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
