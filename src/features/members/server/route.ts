@@ -46,12 +46,10 @@ const app = new Hono()
     const databases = c.get("databases");
 
     const memberToDelete = await databases.getDocument(DATABASE_ID, MEMBERS_ID, memberId);
-    console.log(".delete ~ memberToDelete:", memberToDelete);
 
     const allMembersInWorkspace = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
       Query.equal("workspaceId", memberToDelete.workspaceId),
     ]);
-    console.log(".delete ~ allMembersInWorkspace:", allMembersInWorkspace);
 
     const member = await getMember({
       databases,

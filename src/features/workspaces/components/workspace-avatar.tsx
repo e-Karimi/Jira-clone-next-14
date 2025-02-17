@@ -22,7 +22,7 @@ export const WorkspaceAvatar = ({ name, image, className }: WorkspaceAvatarProps
     <Avatar className={cn("size-10", className)}>
       <AvatarFallback>
         <div className="size-10 rounded-md flex items-center justify-center text-muted bg-blue-500 font-semibold text-lg uppercase">
-          {name[0].toUpperCase()}
+          {name.charAt(0).toUpperCase()}
         </div>
       </AvatarFallback>
     </Avatar>
