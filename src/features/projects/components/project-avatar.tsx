@@ -20,7 +20,7 @@ export const ProjectAvatar = ({ name, image, className, fallbackclassName }: Pro
   }
 
   return (
-    <Avatar className={cn("size-5", className)}>
+    <Avatar className={cn("size-5 flex items-center justify-center", className)}>
       <AvatarFallback>
         <div
           className={cn(

@@ -8,7 +8,7 @@ export default function SettingsLayoutPage({ children }: { children: React.React
     <main className="bg-neutral-100 min-h-screen">
       <div className="mx-auto max-w-screen-2xl p-4">
         <nav className="flex justify-between items-center h-[73px]">
-          <Link href="/">
+          <Link href="/workspaces">
             <Image src="/logo.svg" alt="logo" width={152} height={56} priority className="w-[152px] h-14" />
           </Link>
           <UserButton />

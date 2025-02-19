@@ -1,7 +1,7 @@
 import { Query } from "node-appwrite";
 
 import { DATABASE_ID, WORKSPACES_ID, MEMBERS_ID } from "@/config";
-import { getMember } from "../members/queries";
+import { getMember } from "@/features/members/queries";
 import { Workspace } from "./types";
 import { createSessonClient } from "@/lib/appwrite";
 
@@ -25,39 +25,34 @@ export const getWorkspaces = async () => {
 
     return workspaces;
   } catch (error) {
-    console.log("workspaces/actions/getWorkspaces => error:", error);
+    console.log("workspaces/queries/getWorkspaces => error:", error);
     return { documents: [], total: 0 };
   }
 };
 
 export const getWorkspace = async ({ workspaceId }: { workspaceId: string }) => {
-  try {
-    const { account, databases } = await createSessonClient();
-    const user = await account.get();
+  const { account, databases } = await createSessonClient();
+  const user = await account.get();
 
-    const member = await getMember({ databases, workspaceId, userId: user.$id });
-    if (!member) return null;
+  const member = await getMember({ databases, workspaceId, userId: user.$id });
 
-    const workspace = await databases.getDocument<Workspace>(DATABASE_ID, WORKSPACES_ID, workspaceId);
-
-    return workspace;
-  } catch (error) {
-    console.log("workspaces/actions/getWorkspace => error:", error);
-    return null;
+  if (!member) {
+    throw new Error("Unauthorized!!");
   }
+
+  const workspace = await databases.getDocument<Workspace>(DATABASE_ID, WORKSPACES_ID, workspaceId);
+
+  return workspace;
 };
 
 export const getWorkspaceInfo = async ({ workspaceId }: { workspaceId: string }) => {
-  try {
-    const { databases } = await createSessonClient();
+  const { databases } = await createSessonClient();
 
-    const workspace = await databases.getDocument<Workspace>(DATABASE_ID, WORKSPACES_ID, workspaceId);
-
-    return {
-      name: workspace.name,
-    };
-  } catch (error) {
-    console.log("workspaces/actions/getWorkspaceInfo => error:", error);
-    return null;
+  const workspace = await databases.getDocument<Workspace>(DATABASE_ID, WORKSPACES_ID, workspaceId);
+  if (!workspace) {
+    throw new Error("Workspace not found!!");
   }
+  return {
+    name: workspace.name,
+  };
 };

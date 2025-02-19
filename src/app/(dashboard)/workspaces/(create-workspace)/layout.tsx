@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { UserButton } from "@/features/auth/components/user-button";
 
-export default function StandaloneLayoutPage({ children }: { children: React.ReactNode }) {
+export default function CreateWorkspaceLayoutPage({ children }: { children: React.ReactNode }) {
   return (
     <main className="bg-neutral-100 min-h-screen">
       <div className="mx-auto max-w-screen-2xl p-4">

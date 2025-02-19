@@ -66,11 +66,8 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: CreateWorkspacesF
     mutate(
       { form: finalValues, param: { workspaceId: initialValues.$id } },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: () => {
           form.reset();
-          if (data) {
-            router.push(`/workspaces/${data.$id}`);
-          }
         },
       }
     );
@@ -118,16 +115,9 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: CreateWorkspacesF
 
     if (!ok) return null;
 
-    resetInviteCode(
-      {
-        param: { workspaceId: initialValues.$id },
-      },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
-      }
-    );
+    resetInviteCode({
+      param: { workspaceId: initialValues.$id },
+    });
   };
 
   return (

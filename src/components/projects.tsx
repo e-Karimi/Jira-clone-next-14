@@ -17,8 +17,6 @@ export const Projects = () => {
   const pathname = usePathname();
   const { setIsOpen } = useCreateProjectModal();
 
-  const projectId = null; //todo  useProjectId
-
   return (
     <>
       <div className="flex flex-col gap-y-1 ">
@@ -31,7 +29,7 @@ export const Projects = () => {
         </div>
         {projects?.total !== 0 &&
           projects?.documents.map((project) => {
-            const href = `/workspaces/${workspaceId}/projects/${projectId}`;
+            const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
             const isActive = pathname === href;
             return (
               <Link href={href} key={project.$id}>

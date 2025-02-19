@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { InferRequestType, InferResponseType } from "hono";
 
@@ -7,12 +6,12 @@ import { toast } from "sonner";
 import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
 
-const $patch = client.api.workspaces[":workspaceId"]["$patch"];
+const $patch = client.api.projects[":projectId"]["$patch"];
 
 type RequestType = InferRequestType<typeof $patch>;
 type ResponseType = InferResponseType<typeof $patch>;
 
-export const useUpdateWorkspace = () => {
+export const useUpdateProject = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -21,20 +20,20 @@ export const useUpdateWorkspace = () => {
       const response = await $patch({ form, param });
 
       if (!response.ok) {
-        toast.error("Faild to update workspace");
+        toast.error("Faild to update project");
       }
       return await response.json();
     },
     onSuccess: ({ data }) => {
-      toast.success("Workspace updated");
+      toast.success("Project updated");
       //Update server components
       router.refresh();
       //Invalidate
-      queryClient.invalidateQueries({ queryKey: ["workspaces"] });
-      data && queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["project", data?.$id] });
     },
     onError: () => {
-      toast.error("Faild to update workspace");
+      toast.error("Faild to update project");
     },
   });
 
