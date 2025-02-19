@@ -28,7 +28,6 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormPrps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate, isPending } = useCreateProject();
   const workspaceId = useWorkspaceId();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
 
   const form = useForm<z.infer<typeof createProjectSchema>>({
@@ -48,9 +47,9 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormPrps) => {
     mutate(
       { form: finalValues },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
-          //TODO redirect to project screen
+          router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
         },
       }
     );
