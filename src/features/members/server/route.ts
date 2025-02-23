@@ -18,7 +18,6 @@ const app = new Hono()
     const { workspaceId } = c.req.valid("query");
 
     const member = await getMember({ databases, workspaceId, userId: user.$id });
-    console.log("member:", member);
     if (!member) {
       return c.json({ error: "Unauthorized" }, 401);
     }
@@ -28,7 +27,6 @@ const app = new Hono()
     const populatedMembers = await Promise.all(
       members.documents.map(async (member) => {
         const user = await users.get(member.userId);
-        console.log("members.documents.map ~ user:", user);
 
         return {
           ...member,
