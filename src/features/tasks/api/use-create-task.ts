@@ -15,8 +15,7 @@ export const useCreateTask = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await $post({ json });
-
-      console.log(" mutationFn: ~ response:", response);
+      
       if (!response.ok) {
         toast.error("Faild to create task");
         throw new Error("Faild to create task");
