@@ -111,6 +111,7 @@ const app = new Hono()
     await databases.deleteDocument(DATABASE_ID, PROJECTS_ID, projectId);
 
     return c.json({ data: { $id: projectId } }, 200);
-  });
+  })
+
 
 export default app;
