@@ -5,7 +5,6 @@ import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 const $patch = client.api.workspaces[":workspaceId"]["$patch"];
 
@@ -14,7 +13,6 @@ type ResponseType = InferResponseType<typeof $patch>;
 
 export const useUpdateWorkspace = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ form, param }) => {
@@ -27,8 +25,7 @@ export const useUpdateWorkspace = () => {
     },
     onSuccess: ({ data }) => {
       toast.success("Workspace updated");
-      //Update server components
-      router.refresh();
+
       //Invalidate
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       data && queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });

@@ -3,7 +3,7 @@ import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
+
 
 const $delete = client.api.tasks[":taskId"]["$delete"];
 
@@ -12,7 +12,7 @@ type RequestType = InferRequestType<typeof $delete>;
 
 export const useDeleteTask = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
+
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param }) => {
@@ -30,7 +30,6 @@ export const useDeleteTask = () => {
       //Invalidate
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
-      router.refresh();
     },
     onError: () => {
       toast.error("Faild to delete task");

@@ -1,8 +1,6 @@
 import { Query } from "node-appwrite";
 
 import { DATABASE_ID, WORKSPACES_ID, MEMBERS_ID } from "@/config";
-import { getMember } from "@/features/members/queries";
-import { Workspace } from "./types";
 import { createSessonClient } from "@/lib/appwrite";
 
 export const getWorkspaces = async () => {
@@ -28,31 +26,4 @@ export const getWorkspaces = async () => {
     console.log("workspaces/queries/getWorkspaces => error:", error);
     return { documents: [], total: 0 };
   }
-};
-
-export const getWorkspace = async ({ workspaceId }: { workspaceId: string }) => {
-  const { account, databases } = await createSessonClient();
-  const user = await account.get();
-
-  const member = await getMember({ databases, workspaceId, userId: user.$id });
-
-  if (!member) {
-    throw new Error("Unauthorized!!");
-  }
-
-  const workspace = await databases.getDocument<Workspace>(DATABASE_ID, WORKSPACES_ID, workspaceId);
-
-  return workspace;
-};
-
-export const getWorkspaceInfo = async ({ workspaceId }: { workspaceId: string }) => {
-  const { databases } = await createSessonClient();
-
-  const workspace = await databases.getDocument<Workspace>(DATABASE_ID, WORKSPACES_ID, workspaceId);
-  if (!workspace) {
-    throw new Error("Workspace not found!!");
-  }
-  return {
-    name: workspace.name,
-  };
 };
