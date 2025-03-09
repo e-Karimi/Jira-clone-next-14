@@ -112,7 +112,7 @@ const app = new Hono()
     const user = c.get("user");
     const databases = c.get("databases");
 
-    const { name, status, workspaceId, projectId, assigneeId, dueDate } = c.req.valid("json");
+    const { name, status, workspaceId, projectId, assigneeId, dueDate, description } = c.req.valid("json");
 
     const member = await getMember({ databases, workspaceId, userId: user.$id });
     if (!member) return c.json({ error: "Unauthorized!!" }, 401);
@@ -133,6 +133,7 @@ const app = new Hono()
       projectId,
       assigneeId,
       dueDate,
+      description,
       position: newPosition,
     });
 

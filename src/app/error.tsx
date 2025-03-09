@@ -12,7 +12,7 @@ interface ErrorPageProps {
 
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   return (
-    <div className="h-screen flex flex-col gap-y- items-center justify-center space-y-3">
+    <div className="h-screen flex flex-col gap-y-2 items-center justify-center space-y-3">
       <AlertTriangleIcon className="size-8" />
       <p className="text-base">Something went wrong!</p>
       <p className="text-sm">{error.message}</p>

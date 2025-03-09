@@ -1,11 +1,12 @@
 import { Sidebar } from "@/components/sidebar";
 import { Navbar } from "@/components/navbar";
+
 import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspace-modal";
 import { CreateProjectModal } from "@/features/projects/components/create-project-modal";
 import { CreateTaskModal } from "@/features/tasks/components/create-task-modal";
 import { EditTaskModal } from "@/features/tasks/components/edit-task-modal";
 
-export default function WorkspaceIdLayoutPage({ children }: { children: React.ReactNode }) {
+export default function TasksLayoutPage({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen">
       <CreateWorkspaceModal />
