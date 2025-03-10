@@ -10,6 +10,8 @@ import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import { PageLoader } from "@/components/page-loader";
 import { PageError } from "@/components/page-error";
+import { useGetProjectAnalytics } from "@/features/projects/api/use-get-project-analytics";
+import { Analytics } from "@/components/analytics";
 
 interface ProjectIdPageClientProps {
   projectId: string;
@@ -17,22 +19,25 @@ interface ProjectIdPageClientProps {
 }
 
 export const ProjectIdPageClient = ({ projectId, workspaceId }: ProjectIdPageClientProps) => {
-  const { data: peoject, isLoading } = useGetProject({ projectId });
+  const { data: project, isLoading: isLoadingProject } = useGetProject({ projectId });
+  const { data: analytics, isLoading: isLoadingAnalytics } = useGetProjectAnalytics({ projectId });
+
+  const isLoading = isLoadingProject || isLoadingAnalytics;
 
   if (isLoading) {
     return <PageLoader />;
   }
 
-  if (!peoject) {
-    return <PageError error="Project not found" />;
+  if (!project || !analytics) {
+    return <PageError error="project not found" />;
   }
 
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-2">
-          <ProjectAvatar name={peoject.name} image={peoject.imageUrl} className="size-6" />
-          <p className="text-base font-semibold">{peoject.name}</p>
+          <ProjectAvatar name={project.name} image={project.imageUrl} className="size-6" />
+          <p className="text-base font-semibold">{project.name}</p>
         </div>
         <div>
           <Button asChild variant="secondary" size="sm" disabled={isLoading}>
@@ -44,6 +49,7 @@ export const ProjectIdPageClient = ({ projectId, workspaceId }: ProjectIdPageCli
           </Button>
         </div>
       </div>
+      {analytics && <Analytics data={analytics} />}
       <TaskViewSwitcher hideProjectFilters />
     </div>
   );
