@@ -12,7 +12,7 @@ interface UseGetTasksProps {
   search?: string | null;
 }
 
-export const UseGetTasks = ({ workspaceId, projectId, assigneeId, status, dueDate, search }: UseGetTasksProps) => {
+export const useGetTasks = ({ workspaceId, projectId, assigneeId, status, dueDate, search }: UseGetTasksProps) => {
   const query = useQuery({
     queryKey: ["tasks", workspaceId, projectId, assigneeId, status, dueDate, search],
     queryFn: async () => {

@@ -8,7 +8,7 @@ import { Loader, PlusIcon } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
-import { UseGetTasks } from "../api/use-get-tasks";
+import { useGetTasks } from "../api/use-get-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { DataFilters } from "./data-filters";
 import { useTasksFilters } from "../hooks/use-tasks-filters";
@@ -29,7 +29,7 @@ export const TaskViewSwitcher = ({ hideProjectFilters }: TaskViewSwitcherProps) 
   const [{ projectId, assigneeId, dueDate, search, status }] = useTasksFilters();
 
   const { mutate: bulkUpdate } = useBulkUpdateTasks();
-  const { data: tasks, isLoading: isLoadingTasks } = UseGetTasks({
+  const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
     projectId,
     assigneeId,
