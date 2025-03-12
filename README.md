@@ -9,11 +9,11 @@ https://github.com/user-attachments/assets/39ab8420-80fe-43a1-8f26-65b87fba7ddc
 
 
 ## 🧲 Features
-- "My Tasks" page where you can view your tasks in different formats  Implemented  a table view for a quick overview to find tasks based on different criteria like the person assigned to that task  and a comound board for easy drag and drop task management and finally a calendar view for better deadline tracking. 
+-  view your tasks in different formats : table view , kanban view , calendar view
 
-- "Task" page where you can view and edit task details
+-  View and edit task details
 
--  An editing system where you can change assignes and move tasks between projects and update their status.
+- Edit assignes and move tasks between projects and update their status.
 
 ## 💻  Run the project 
 use this command
