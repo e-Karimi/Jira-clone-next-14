@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# <i>Jira-clone-next-14</i> ![Jira_Logo svg](https://github.com/user-attachments/assets/080436da-8e52-4fe1-ba7d-fef7ebff1ad9)
 
-## Getting Started
+#### This project acts as a complete full-stack application and management platform designed for the creation and administration of projects and tasks and members related to them. It has been built using a combination of Next.js (version 14), TypeScript, Hono.js, Tailwind CSS, and Shadcn. Appwrite has been chosen as the database. The application was created to improve proficiency in Next.js, focusing on aspects such as dynamic and nested routing, database relationships, and both server and client components. The authentication system has been integrated with appwrite. Several libraries have been utilized, including Hono, date-fns, Zod, React Query, @hello-pangea/dnd, nuqs, and React-Hook-Form, among others.
 
-First, run the development server:
+## 🧲 Features
+- "My Tasks" page where you can view your tasks in different formats  Implemented  a table view for a quick overview to find tasks based on different criteria like the person assigned to that task  and a comound board for easy drag and drop task management and finally a calendar view for better deadline tracking. 
 
+- "Task" page where you can view and edit task details
+
+-  An editing system where you can change assignes and move tasks between projects and update their status.
+
+## 💻  Run the project 
+use this command
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js v14
+- Hono.js
+- Typescript
+- Tailwind CSS
+- Shadcn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🙇 Acknowledgements
+- <a href="https://www.youtube.com/watch?v=Av9C7xlV0fA"> Code With Antonio - Build a Jira Clone With Nextjs, React, Tailwind, Hono.js </a>
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## <i>Pictuers</i> 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### My tasks page - tabel veiw
+![tasks-tabel-veiw](https://github.com/user-attachments/assets/18f0788f-2d5a-417b-b6a9-f10b7ac92d38)
 
-## Deploy on Vercel
+#### My tasks page - kanban veiw
+![tasks-kanban-veiw](https://github.com/user-attachments/assets/a88040b4-f14a-4021-b905-19ab23bc242d)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### My tasks page - calendar veiw
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![tasks-calendarl-veiw](https://github.com/user-attachments/assets/29d84e04-37b6-4a1a-9455-78849f6794be)
