@@ -16,6 +16,7 @@ import { FaGithub } from "react-icons/fa";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { registerSchema } from "../schemas";
 import { useRegister } from "../api/use-register";
+import { signUpWithGithub } from "@/lib/oauth";
 
 export const SignUpCard = () => {
   const { mutate, isPending } = useRegister();
@@ -104,7 +105,13 @@ export const SignUpCard = () => {
           <FcGoogle className="mr-2 size-5" />
           Login with Google
         </Button>
-        <Button disabled={isPending} variant="secondary" size="lg" className="w-full">
+        <Button
+          onClick={() => signUpWithGithub()}
+          disabled={isPending}
+          variant="secondary"
+          size="lg"
+          className="w-full"
+        >
           <FaGithub className="mr-2 size-5" />
           Login with Github
         </Button>
